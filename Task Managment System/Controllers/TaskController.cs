@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Task_Managment_System.Models;
@@ -85,8 +86,9 @@ namespace Task_Managment_System.Controllers
             return _apiResponse;
         }
 
-
+        [Authorize]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -138,8 +140,9 @@ namespace Task_Managment_System.Controllers
         }
 
 
-
+        [Authorize]
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -183,11 +186,14 @@ namespace Task_Managment_System.Controllers
             return _apiResponse;
         }
 
+
+        [Authorize]
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<APIResponse<Tasks>>> UpdateVilla([FromRoute] int id, Tasks model)
+        public async Task<ActionResult<APIResponse<Tasks>>> UpdateTask([FromRoute] int id, Tasks model)
         {
             try
             {

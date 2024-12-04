@@ -51,7 +51,7 @@ namespace Task_Managment_System.Data
                    {
                        UserId = 1,
                        Name = "Shaheer",
-                       password = "12345"
+                       Password = "12345"
 
                    }
 

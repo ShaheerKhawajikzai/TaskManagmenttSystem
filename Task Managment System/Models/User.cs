@@ -14,6 +14,6 @@ namespace Task_Managment_System.Models
         public string Name { get; set; }
 
         [Required]
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }
