@@ -4,18 +4,17 @@
 
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Task List</h2>
+    <h2 class="text-center mb-4 display-6 fw-bold text-primary">Task List</h2>
 
     <div class="d-flex justify-content-end mb-3">
-        <a href="/Home/Create" class="btn btn-success">
-            + Create Task
+        <a href="/Home/Create" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Create Task
         </a>
     </div>
 
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
+    <div class="table-responsive shadow-lg p-3 mb-5 bg-body rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark text-center">
                 <tr>
                     <th>Task ID</th>
                     <th>Title</th>
@@ -24,7 +23,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="taskTableBody">
+            <tbody id="taskTableBody" class="text-center">
+           
             </tbody>
         </table>
     </div>
@@ -62,16 +62,43 @@
 
 
     function deleteTask(taskId) {
-        $.ajax({
-            url: `https://localhost:7075/api/Task/${taskId}`,
-            type: 'DELETE',
-            success: function (response) {
-                $(`#task-${taskId}`).remove();
-                alert("Task deleted successfully");
-            },
-            error: function (error) {
-                alert('Failed to delete task. Please try again.');
-            }
+
+        //show sweet alert 
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+          if (result.isConfirmed) 
+
+         {
+              //if user wants to delete
+               $.ajax({
+                    url: `https://localhost:7075/api/Task/${taskId}`,
+                    type: 'DELETE',
+                    success: function (response) {
+                        $(`#task-${taskId}`).remove();
+               
+                    },
+                    error: function (error) {
+                        alert('Failed to delete task. Please try again.');
+                    }
+                });
+
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+         }
         });
-    }
+
+
+       
+ }
 </script>

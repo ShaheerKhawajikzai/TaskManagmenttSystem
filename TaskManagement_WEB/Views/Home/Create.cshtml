@@ -39,7 +39,11 @@
             const title = $('#Title').val();
 
             if (!status || !title) {
-                alert("Please enter status and title");
+                 Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Please select title and status.",
+                });
                 return;
             }
 
@@ -55,8 +59,10 @@
                 contentType: 'application/json',
                 data: JSON.stringify(newTask),
                 success: function (response) {
-                    window.location.href = '/Home';
-                    alert("Task added Successfully !");
+
+                alert("Task has been Saved.");
+                window.location.href = '/Home';
+                   
                 },
                 error: function (error) {
                     alert('Failed to create task. Please try again.');

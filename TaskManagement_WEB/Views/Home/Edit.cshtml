@@ -1,4 +1,8 @@
-﻿<div class="container mt-5">
+﻿@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<div class="container mt-5">
     <h2 class="text-center mb-4">Edit Task</h2>
 
     <form id="editTaskForm" class="w-50 mx-auto">
@@ -51,10 +55,15 @@
         var Id = window.location.pathname.split('/').pop();
 
          const status = $('#Status').val();
-        const title = $('#Title').val();
+         const title = $('#Title').val();
 
             if (!status || !title) {
-                alert("Please enter status and title");
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Please select title and status.",
+                 
+                });
                 return;
             }
 
