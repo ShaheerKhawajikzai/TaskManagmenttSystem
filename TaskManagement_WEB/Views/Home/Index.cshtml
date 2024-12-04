@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Task List</h2>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/Home/Create" class="btn btn-success">
+            + Create Task
+        </a>
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Task ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="taskTableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'https://localhost:7075/api/Task/',
+            type: 'GET',
+            success: function (data) {
+                data.result.forEach(task => {
+                    $('#taskTableBody').append(`
+                        <tr id="task-${task.taskId}">
+                            <td>${task.taskId}</td>
+                            <td>${task.title}</td>
+                            <td>${task.description || 'N/A'}</td>
+                            <td>${task.status}</td>
+                            <td>
+
+                                <a href="/Home/Edit/${task.taskId}" class="btn btn-success btn-sm">Edit</a>
+                                <button class="btn btn-danger btn-sm" onclick="deleteTask(${task.taskId})">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching tasks:', error);
+                alert('Failed to fetch tasks. Check the console for details.');
+            }
+        });
+
+    });
+
+
+    function deleteTask(taskId) {
+        $.ajax({
+            url: `https://localhost:7075/api/Task/${taskId}`,
+            type: 'DELETE',
+            success: function (response) {
+                $(`#task-${taskId}`).remove();
+                alert("Task deleted successfully");
+            },
+            error: function (error) {
+                alert('Failed to delete task. Please try again.');
+            }
+        });
+    }
+</script>

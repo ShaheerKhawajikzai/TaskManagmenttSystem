@@ -1,0 +1,83 @@
+﻿<div class="container mt-5">
+    <h2 class="text-center mb-4">Edit Task</h2>
+
+    <form id="editTaskForm" class="w-50 mx-auto">
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" required>
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea class="form-control" id="Description" name="Description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="Status" class="form-label">Status</label>
+            <select class="form-select" id="Status" name="Status" required>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="updateTask()">Save Changes</button>
+        <a href="/Home" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var taskId = window.location.pathname.split('/').pop();
+
+       
+
+
+
+        $.ajax({
+            url: `https://localhost:7075/api/Task/${taskId}`,
+            type: 'GET',
+            success: function (data) {
+
+                $('#Title').val(data.result.title);
+                $('#Description').val(data.result.description);
+                $('#Status').val(data.result.status);
+            },
+            error: function (error) {
+                alert('Failed to fetch task details. Please try again.');
+            }
+        });
+    });
+
+    function updateTask() {
+        var Id = window.location.pathname.split('/').pop();
+
+         const status = $('#Status').val();
+        const title = $('#Title').val();
+
+            if (!status || !title) {
+                alert("Please enter status and title");
+                return;
+            }
+
+        console.log("updating");
+        var updatedTask = {
+            title: $('#Title').val(),
+            description: $('#Description').val(),
+            status: $('#Status').val(),
+            taskId: Id
+        };
+
+        $.ajax({
+            url: `https://localhost:7075/api/Task/${Id}`,
+            type: 'PUT',
+            data: JSON.stringify(updatedTask),
+            contentType: 'application/json',
+            success: function (response) {
+                window.location.href = '/Home';
+                alert('Task updated successfully!');
+            },
+            error: function (error) {
+                alert('Failed to update task. Please try again.');
+            }
+        });
+    }
+</script>
