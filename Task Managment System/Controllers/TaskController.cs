@@ -86,7 +86,8 @@ namespace Task_Managment_System.Controllers
             return _apiResponse;
         }
 
-        [Authorize]
+        //[Authorize] Uncomment this attribute to enforce authorization during API testing in Swagger UI.
+        // Note: This will not work with the frontend right now because the frontend does not send an authorization token with the request.
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -140,7 +141,8 @@ namespace Task_Managment_System.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize] Uncomment this attribute to enforce authorization during API testing in Swagger UI.
+        // Note: This will not work with the frontend right now because the frontend does not send an authorization token with the request.
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -187,7 +189,8 @@ namespace Task_Managment_System.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize] Uncomment this attribute to enforce authorization during API testing in Swagger UI.
+        // Note: This will not work with the frontend right now because the frontend does not send an authorization token with the request.
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
