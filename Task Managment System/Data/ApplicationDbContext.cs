@@ -10,6 +10,7 @@ namespace Task_Managment_System.Data
         }
 
         public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,7 +45,19 @@ namespace Task_Managment_System.Data
                       }
             );
 
+            modelBuilder.Entity<User>().HasData(
 
+                   new User
+                   {
+                       UserId = 1,
+                       Name = "Shaheer",
+                       password = "12345"
+
+                   }
+
+
+
+           );
         }
     }
 }
